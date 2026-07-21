@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(conda env *)",
+      "Bash(conda run *)",
+      "Bash(sed -E 's/.*_\\([0-9]+\\)\\\\.jpg$/\\\\1/')",
+      "Bash(awk '{print length\\($0\\)}')",
+      "Bash(grep -vE '_[0-9]{4}\\\\.jpg$')",
+      "Bash(wsl.exe -e bash -lc \"/home/kk4ever/anaconda3/bin/conda env list\")",
+      "Bash(wsl.exe -e bash -lc \"/home/kk4ever/anaconda3/bin/conda run -n ocr python -c \\\\\"import fitz; print\\('fitz', fitz.__doc__\\)\\\\\"\")",
+      "Bash(wsl.exe -e bash -lc \"/home/kk4ever/anaconda3/bin/conda run -n ocr python -c \\\\\"import PIL; print\\('PIL', PIL.__version__\\)\\\\\"\")",
+      "Bash(wsl.exe *)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(MSYS_NO_PATHCONV=1 wsl.exe -e bash -lc \"/home/kk4ever/anaconda3/envs/ocr/bin/python3 --version\")",
+      "Bash(MSYS_NO_PATHCONV=1 wsl.exe -e bash -lc \"/home/kk4ever/anaconda3/bin/conda run -n ocr python -c \\\\\"import matplotlib\\\\\"\")",
+      "Bash(MSYS_NO_PATHCONV=1 wsl.exe -e bash -lc \"/home/kk4ever/anaconda3/bin/conda run -n ocr pip install matplotlib\")",
+      "Bash(MSYS_NO_PATHCONV=1 wsl.exe -e bash -lc \"ls -la /home/kk4ever/kklab/ocr_proj/mk_docu/images_ori/00939648/\")",
+      "Bash(MSYS_NO_PATHCONV=1 wsl.exe -e bash -lc '/home/kk4ever/anaconda3/bin/conda run -n ocr python -c \" *)"
+    ]
+  }
+}

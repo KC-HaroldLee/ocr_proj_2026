@@ -1,0 +1,27 @@
+# 실제 문서 원본/샘플 (개인정보 포함 가능성 있음 + 용량 큼) - 코드만 버전관리
+mk_docu/images_ori/
+docu/sample/
+
+# 옛날 코드
+old
+
+# 스크립트가 생성하는 산출물 (스크립트 재실행하면 다시 만들어짐)
+mk_docu/pdf/
+mk_docu/images_split/
+mk_docu/images_step1_skew/
+mk_docu/images_step1_skew_only_C1/
+mk_docu/images_step2_ocr_C1/
+
+# Python
+__pycache__/
+*.pyc
+
+# 에디터/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 현재 사용PC를 알려줄 임시파일
+HERE_IS_*
+
