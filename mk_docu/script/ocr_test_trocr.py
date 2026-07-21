@@ -133,7 +133,12 @@ def process_page(image_path, doc_id, angle, reader, processor, tokenizer, model,
 
     t0 = time.perf_counter()
     rgb = cv2.cvtColor(corrected, cv2.COLOR_BGR2RGB)
-    horizontal_list, free_list = reader.detect(rgb)
+    # width_ths(기본 0.5)를 낮춰서 문장 전체 폭으로 뭉치지 않고 단어/짧은 구 단위로 쪼개지게 함.
+    # easyocr.utils.group_text_box의 "(x_min - prev_x_max) < width_ths*box_height" 병합 조건을
+    # 직접 읽고 확인함 - link_threshold(CRAFT 문자 연결 단계)는 이 문제와 무관.
+    # 실측(00939648_0001): width_ths=0.5 -> 21박스/최대비율13.9, 0.08 -> 102박스/최대비율6.6/중앙값1.6
+    # ko-trocr는 bbox 가로세로비 4:1 이내에서 정확했으므로(README 6.1 참고) 0.08로 고정.
+    horizontal_list, free_list = reader.detect(rgb, width_ths=0.08)
     horizontal_list = horizontal_list[0] if horizontal_list else []
     free_list = free_list[0] if free_list else []
     detect_seconds = time.perf_counter() - t0
@@ -171,6 +176,7 @@ def main():
                                                     / "images_step1_skew_only_C1" / "angles.csv"))
     parser.add_argument("--output_dir", default=str(Path(__file__).resolve().parent.parent / "images_step2_ocr_C1"))
     parser.add_argument("--doc_id", default=None, help="특정 문서ID 폴더만 처리 (폴더명 기준)")
+    parser.add_argument("--page", default=None, help="특정 페이지 파일명만 처리 (예: 00473059_0012.jpg)")
     args = parser.parse_args()
 
     skew_csv = Path(args.skew_csv)
@@ -208,6 +214,8 @@ def main():
     n_pages = 0
     for doc_dir in doc_dirs:
         image_paths = sorted(p for p in doc_dir.iterdir() if p.suffix.lower() in {".jpg", ".jpeg", ".png"})
+        if args.page:
+            image_paths = [p for p in image_paths if p.name == args.page]
         for image_path in image_paths:
             key = (doc_dir.name, image_path.name)
             if key not in angles:
